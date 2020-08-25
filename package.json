@@ -1,0 +1,20 @@
+{
+  "name": "gh-truncate-string-action",
+  "version": "1.0.0",
+  "description": "Simple truncate string",
+  "main": "src/main.js",
+  "repository": "https://github.com/2428392/gh-truncate-string-action.git",
+  "author": "Brian Kurtz",
+  "license": "MIT",
+  "devDependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^4.0.0",
+    "@fye/eslint-config": "^1.0.2",
+    "@zeit/ncc": "^0.22.3",
+    "eslint-config-xo-space": "^0.25.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.1.0",
+    "yaml-lint": "^1.2.4"
+  }
+}
