@@ -1,0 +1,19 @@
+name: 'Truncate String'
+description: 'Simple truncate string'
+author: "Brian Kurtz"
+branding:
+  icon: briefcase
+  color: orange
+inputs:
+  stringToTruncate:
+    description: String to be truncated
+    required: true
+  maxLength:
+    description: Max length of the string
+    required: true
+outputs:
+  string:
+    description: The truncated string
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
