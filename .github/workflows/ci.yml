@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  [pull_request, push]
+
+jobs:
+  buildAndTest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - uses: actions/checkout@v2
+      - name: Install Depenencies
+        run: yarn install
+      - name: test
+        run: yarn test
+      - name: String truncated
+        id: truncateTest
+        uses: ./
+        with:
+          stringToTruncate: 'abcdefghijklmnopqrstuvwxyz'
+          maxLength: 10
+      - name: Validate truncate test
+        if: ${{ steps.truncateTest.outputs.string != 'abcdefghij' }}
+        run: exit 1
+      - name: String untouched less than Max Value
+        id: lessTest
+        uses: ./
+        with:
+          stringToTruncate: 'abcdefghijklmnopqrstuvwxyz'
+          maxLength: 27
+      - name: Validate less than max value test
+        if: ${{ steps.lessTest.outputs.string != 'abcdefghijklmnopqrstuvwxyz' }}
+        run: exit 1
+      - name: String untouched equal Max Value
+        id: equalTest
+        uses: ./
+        with:
+          stringToTruncate: 'abcdefghijklmnopqrstuvwxyz'
+          maxLength: 26
+      - name: Validate less than amx value test
+        if: ${{ steps.equalTest.outputs.string != 'abcdefghijklmnopqrstuvwxyz' }}
+        run: exit 1

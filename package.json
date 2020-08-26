@@ -6,15 +6,22 @@
   "repository": "https://github.com/2428392/gh-truncate-string-action.git",
   "author": "Brian Kurtz",
   "license": "MIT",
+  "scripts": {
+    "build": "ncc build",
+    "test": "ava"
+  },
   "devDependencies": {
-    "@actions/core": "^1.2.4",
-    "@actions/github": "^4.0.0",
     "@fye/eslint-config": "^1.0.2",
     "@zeit/ncc": "^0.22.3",
+    "ava": "^3.12.1",
     "eslint-config-xo-space": "^0.25.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "prettier": "^2.1.0",
+    "sinon": "^9.0.3",
     "yaml-lint": "^1.2.4"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.4"
   }
 }
