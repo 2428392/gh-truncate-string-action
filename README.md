@@ -27,7 +27,7 @@ on: [ push ]
       runs-on: ubuntu-latest
       steps:
         - name: Truncate String
-          uses: 2428392/gh-truncate-string-action@v1
+          uses: 2428392/gh-truncate-string-action@v1.0.0
           id: truncatedString
           with:
             stringToTruncate: 'abcdefghijklmnopqrstuvwxyz'
