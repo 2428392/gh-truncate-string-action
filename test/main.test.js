@@ -15,6 +15,8 @@ function assertOutput(expectation, t) {
 test.before((t) => {
   t.context = {
     str: 'abcdefghijklmnopqrstuvwxyz',
+    strWithHyphenLessThanMax: 'abcdefghi-jklmnopqrstuvwxyz',
+    strWithHyphenAtMax: 'abcdefghijklmnopqrstuvwxyz-',
   };
 });
 
@@ -25,6 +27,7 @@ test.beforeEach(() => {
 test.afterEach(() => {
   delete process.env.INPUT_STRINGTOTRUNCATE;
   delete process.env.INPUT_MAXLENGTH;
+  delete process.env.INPUT_REMOVEDANGLINGCHARACTERS;
   sinon.restore();
   delete require.cache[require.resolve('../src/main')];
 });
@@ -56,5 +59,49 @@ test.serial(
     process.env.INPUT_MAXLENGTH = 26;
     require('../src/main');
     assertOutput(t.context.str, t);
+  },
+);
+
+test.serial(
+  'returns truncated string without dangaling hyphen',
+  (t) => {
+    process.env.INPUT_STRINGTOTRUNCATE = t.context.strWithHyphenLessThanMax;
+    process.env.INPUT_MAXLENGTH = 10;
+    process.env.INPUT_REMOVEDANGLINGCHARACTERS = '-';
+    require('../src/main');
+    assertOutput('abcdefghi', t);
+  },
+);
+
+test.serial(
+  'returns truncated string when length = max length but has dangaling hyphen',
+  (t) => {
+    process.env.INPUT_STRINGTOTRUNCATE = t.context.strWithHyphenAtMax;
+    process.env.INPUT_MAXLENGTH = 27;
+    process.env.INPUT_REMOVEDANGLINGCHARACTERS = '-';
+    require('../src/main');
+    assertOutput('abcdefghijklmnopqrstuvwxyz', t);
+  },
+);
+
+test.serial(
+  'returns truncated string without any of the provided dangling removable characters',
+  (t) => {
+    process.env.INPUT_STRINGTOTRUNCATE = 'abcd-?#';
+    process.env.INPUT_MAXLENGTH = 7;
+    process.env.INPUT_REMOVEDANGLINGCHARACTERS = '?#-';
+    require('../src/main');
+    assertOutput('abcd', t);
+  },
+);
+
+test.serial(
+  'returns truncated string without any of the provided dangling removable characters when not all removable charaters are matched',
+  (t) => {
+    process.env.INPUT_STRINGTOTRUNCATE = 'abcd#-';
+    process.env.INPUT_MAXLENGTH = 5;
+    process.env.INPUT_REMOVEDANGLINGCHARACTERS = '?#-';
+    require('../src/main');
+    assertOutput('abcd', t);
   },
 );

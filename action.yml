@@ -11,6 +11,9 @@ inputs:
   maxLength:
     description: Max length of the string
     required: true
+  removeDanglingCharacters:
+    description: Remove any of the provided dangling characters. No seperation between characters e.g. -,!%
+    default: ''
 outputs:
   string:
     description: The truncated string

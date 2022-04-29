@@ -1,6 +1,6 @@
 {
   "name": "gh-truncate-string-action",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Simple truncate string",
   "main": "src/main.js",
   "repository": "https://github.com/2428392/gh-truncate-string-action.git",
