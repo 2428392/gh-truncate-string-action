@@ -39,6 +39,26 @@ jobs:
         with:
           stringToTruncate: 'abcdefghijklmnopqrstuvwxyz'
           maxLength: 26
-      - name: Validate less than amx value test
+      - name: Validate less than max value test
         if: ${{ steps.equalTest.outputs.string != 'abcdefghijklmnopqrstuvwxyz' }}
+        run: exit 1
+      - name: String without one dangling character
+        id: oneDanglingTest
+        uses: ./
+        with:
+          stringToTruncate: 'abcdefghi-jklmnopqrstuvwxyz'
+          maxLength: 10
+          removeDanglingCharacters: '-'
+      - name: Validate string without single dangling character test
+        if: ${{ steps.oneDanglingTest.outputs.string != 'abcdefghi' }}
+        run: exit 1
+      - name: String without dangling characters
+        id: multipleDanglingTest
+        uses: ./
+        with:
+          stringToTruncate: 'abcdefg#-?hijklmnopqrstuvwxyz'
+          maxLength: 10
+          removeDanglingCharacters: '?#-'
+      - name: Validate string without multiple dangling characters test
+        if: ${{ steps.multipleDanglingTest.outputs.string != 'abcdefg' }}
         run: exit 1
