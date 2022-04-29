@@ -87,11 +87,11 @@ test.serial(
 test.serial(
   'returns truncated string without any of the provided dangling removable characters',
   (t) => {
-    process.env.INPUT_STRINGTOTRUNCATE = 'abcd-?#';
-    process.env.INPUT_MAXLENGTH = 7;
+    process.env.INPUT_STRINGTOTRUNCATE = 'abcdefg#-?hijklmnopqrstuvwxyz';
+    process.env.INPUT_MAXLENGTH = 10;
     process.env.INPUT_REMOVEDANGLINGCHARACTERS = '?#-';
     require('../src/main');
-    assertOutput('abcd', t);
+    assertOutput('abcdefg', t);
   },
 );
 
