@@ -3,7 +3,7 @@ const core = require('@actions/core');
 function checkAndRemoveDangling(removableCharacters, str) {
     const stringLength = str.length;
     let mutatedString;
-    if (removableCharacters.includes(str.charAt(stringLength -1))) {
+    if (removableCharacters.includes(str.charAt(stringLength - 1))) {
         mutatedString = str.slice(0, -1);
     } else {
         return str;
@@ -13,7 +13,7 @@ function checkAndRemoveDangling(removableCharacters, str) {
 
 function main() {
     const stringToTruncate = core.getInput('stringToTruncate', {
-      required: true,
+        required: true,
     });
     const maxLength = core.getInput('maxLength', { required: true });
     const danglingCharactersInput = core.getInput('removeDanglingCharacters', { required: false });
@@ -21,13 +21,13 @@ function main() {
 
     let acceptableString = stringToTruncate;
     if (stringToTruncate.length > maxLength) {
-      acceptableString = stringToTruncate.substring(0, maxLength);
+        acceptableString = stringToTruncate.substring(0, maxLength);
     }
 
     if (danglingCharacters.length) {
         acceptableString = checkAndRemoveDangling(danglingCharacters, acceptableString);
     }
-    
+
     core.setOutput('string', acceptableString);
 }
 
