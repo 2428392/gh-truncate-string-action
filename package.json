@@ -21,6 +21,6 @@
         "yaml-lint": "^1.2.4"
     },
     "dependencies": {
-        "@actions/core": "^1.2.4"
+        "@actions/core": "1.10.0"
     }
 }

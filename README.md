@@ -62,7 +62,7 @@ on: [ push ]
 Will return `abcdefghi`
 
 ```yaml
-Name: Truncate String remove muiltiple dangling characters
+Name: Truncate String remove multiple dangling characters
 
 on: [ push ]
 
