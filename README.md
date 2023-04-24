@@ -28,7 +28,7 @@ on: [ push ]
       runs-on: ubuntu-latest
       steps:
         - name: Truncate String
-          uses: 2428392/gh-truncate-string-action@v1.1.0
+          uses: 2428392/gh-truncate-string-action@v1.2.0
           id: truncatedString
           with:
             stringToTruncate: 'abcdefghijklmnopqrstuvwxyz'
@@ -49,7 +49,7 @@ on: [ push ]
       runs-on: ubuntu-latest
       steps:
         - name: Truncate String
-          uses: 2428392/gh-truncate-string-action@v1.1.0
+          uses: 2428392/gh-truncate-string-action@v1.2.0
           id: truncatedString
           with:
             stringToTruncate: 'abcdefghi-jklmnopqrstuvwxyz'
@@ -62,7 +62,7 @@ on: [ push ]
 Will return `abcdefghi`
 
 ```yaml
-Name: Truncate String remove muiltiple dangling characters
+Name: Truncate String remove multiple dangling characters
 
 on: [ push ]
 
@@ -71,7 +71,7 @@ on: [ push ]
       runs-on: ubuntu-latest
       steps:
         - name: Truncate String
-          uses: 2428392/gh-truncate-string-action@v1.1.0
+          uses: 2428392/gh-truncate-string-action@v1.2.0
           id: truncatedString
           with:
             stringToTruncate: 'abcdefg#-?hijklmnopqrstuvwxyz'
