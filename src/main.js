@@ -12,23 +12,31 @@ function checkAndRemoveDangling(removableCharacters, str) {
 }
 
 function main() {
-    const stringToTruncate = core.getInput('stringToTruncate', {
+    let text = core.getInput('stringToTruncate', {
         required: true,
     });
     const maxLength = core.getInput('maxLength', { required: true });
     const danglingCharactersInput = core.getInput('removeDanglingCharacters', { required: false });
     const danglingCharacters = [...danglingCharactersInput];
+    const truncationSymbol = core.getInput('truncationSymbol', { required: false });
 
-    let acceptableString = stringToTruncate;
-    if (stringToTruncate.length > maxLength) {
-        acceptableString = stringToTruncate.substring(0, maxLength);
+    if (text.length > maxLength) {
+        if (truncationSymbol) {
+            if (truncationSymbol.length > maxLength) {
+                text = truncationSymbol.substring(0, maxLength);
+            } else {
+                text = text.substring(0, maxLength - truncationSymbol.length) + truncationSymbol;
+            }
+        } else {
+            text = text.substring(0, maxLength);
+        }
     }
 
     if (danglingCharacters.length) {
-        acceptableString = checkAndRemoveDangling(danglingCharacters, acceptableString);
+        text = checkAndRemoveDangling(danglingCharacters, text);
     }
 
-    core.setOutput('string', acceptableString);
+    core.setOutput('string', text);
 }
 
 main();

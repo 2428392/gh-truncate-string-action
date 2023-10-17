@@ -97,3 +97,58 @@ test.serial(
         await assertOutput('abcd', t);
     },
 );
+
+test.serial(
+    'returns truncated string with full truncation symbol appended when max length is greater than the length of the truncation symbol',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 4;
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('a...', t);
+    },
+);
+
+test.serial(
+    'returns truncation symbol only when max length is equal to the length of the truncation symbol',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 3;
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('...', t);
+    },
+);
+
+test.serial(
+    'returns partial truncation symbol when the max length is shorter than the length of the truncation symbol 1',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 2;
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('..', t);
+    },
+);
+
+test.serial(
+    'returns partial truncation symbol when the max length is shorter than the length of the truncation symbol 2',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 1;
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('.', t);
+    },
+);
+
+test.serial(
+    'returns empty string when max length is 0',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 0;
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('', t);
+    },
+);
