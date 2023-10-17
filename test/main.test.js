@@ -142,13 +142,10 @@ test.serial(
     },
 );
 
-test.serial(
-    'returns empty string when max length is 0',
-    async (t) => {
-        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
-        process.env.INPUT_MAXLENGTH = 0;
-        process.env.INPUT_TRUNCATIONSYMBOL = '...';
-        require('../src/main');
-        await assertOutput('', t);
-    },
-);
+test.serial('returns empty string when max length is 0', async (t) => {
+    process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+    process.env.INPUT_MAXLENGTH = 0;
+    process.env.INPUT_TRUNCATIONSYMBOL = '...';
+    require('../src/main');
+    await assertOutput('', t);
+});
