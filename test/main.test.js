@@ -149,3 +149,15 @@ test.serial('returns empty string when max length is 0', async (t) => {
     require('../src/main');
     await assertOutput('', t);
 });
+
+test.serial(
+    'returns truncated string and ignores removal of dangling characters when setting the truncation symbol setting',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 4;
+        process.env.INPUT_REMOVEDANGLINGCHARACTERS = '.';
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('a...', t);
+    },
+);

@@ -32,7 +32,7 @@ function main() {
         }
     }
 
-    if (danglingCharacters.length) {
+    if (danglingCharacters.length && !truncationSymbol) {
         text = checkAndRemoveDangling(danglingCharacters, text);
     }
 
