@@ -37,6 +37,7 @@ test.afterEach(() => {
     delete process.env.INPUT_STRINGTOTRUNCATE;
     delete process.env.INPUT_MAXLENGTH;
     delete process.env.INPUT_REMOVEDANGLINGCHARACTERS;
+    delete process.env.INPUT_TRUNCATIONSYMBOL;
     delete process.env.GITHUB_OUTPUT;
     delete require.cache[require.resolve('../src/main')];
 });
