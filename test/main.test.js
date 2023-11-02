@@ -37,6 +37,7 @@ test.afterEach(() => {
     delete process.env.INPUT_STRINGTOTRUNCATE;
     delete process.env.INPUT_MAXLENGTH;
     delete process.env.INPUT_REMOVEDANGLINGCHARACTERS;
+    delete process.env.INPUT_TRUNCATIONSYMBOL;
     delete process.env.GITHUB_OUTPUT;
     delete require.cache[require.resolve('../src/main')];
 });
@@ -63,7 +64,7 @@ test.serial('returns non truncated string when string length is equal to max len
     await assertOutput(t.context.str, t);
 });
 
-test.serial('returns truncated string without dangaling hyphen', async (t) => {
+test.serial('returns truncated string without dangling hyphen', async (t) => {
     process.env.INPUT_STRINGTOTRUNCATE = t.context.strWithHyphenLessThanMax;
     process.env.INPUT_MAXLENGTH = 10;
     process.env.INPUT_REMOVEDANGLINGCHARACTERS = '-';
@@ -71,7 +72,7 @@ test.serial('returns truncated string without dangaling hyphen', async (t) => {
     await assertOutput('abcdefghi', t);
 });
 
-test.serial('returns truncated string when length = max length but has dangaling hyphen', async (t) => {
+test.serial('returns truncated string when length = max length but has dangling hyphen', async (t) => {
     process.env.INPUT_STRINGTOTRUNCATE = t.context.strWithHyphenAtMax;
     process.env.INPUT_MAXLENGTH = 27;
     process.env.INPUT_REMOVEDANGLINGCHARACTERS = '-';
@@ -95,5 +96,69 @@ test.serial(
         process.env.INPUT_REMOVEDANGLINGCHARACTERS = '?#-';
         require('../src/main');
         await assertOutput('abcd', t);
+    },
+);
+
+test.serial(
+    'returns truncated string with full truncation symbol appended when max length is greater than the length of the truncation symbol',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 4;
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('a...', t);
+    },
+);
+
+test.serial(
+    'returns truncation symbol only when max length is equal to the length of the truncation symbol',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 3;
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('...', t);
+    },
+);
+
+test.serial(
+    'returns partial truncation symbol when the max length is shorter than the length of the truncation symbol 1',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 2;
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('..', t);
+    },
+);
+
+test.serial(
+    'returns partial truncation symbol when the max length is shorter than the length of the truncation symbol 2',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 1;
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('.', t);
+    },
+);
+
+test.serial('returns empty string when max length is 0', async (t) => {
+    process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+    process.env.INPUT_MAXLENGTH = 0;
+    process.env.INPUT_TRUNCATIONSYMBOL = '...';
+    require('../src/main');
+    await assertOutput('', t);
+});
+
+test.serial(
+    'returns truncated string and ignores removal of dangling characters when setting the truncation symbol setting',
+    async (t) => {
+        process.env.INPUT_STRINGTOTRUNCATE = 'abcde';
+        process.env.INPUT_MAXLENGTH = 4;
+        process.env.INPUT_REMOVEDANGLINGCHARACTERS = '.';
+        process.env.INPUT_TRUNCATIONSYMBOL = '...';
+        require('../src/main');
+        await assertOutput('a...', t);
     },
 );
