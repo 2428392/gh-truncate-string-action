@@ -4,12 +4,12 @@ GitHub action that will truncate a passed string if it is greater than the passe
 
 ## Inputs
 
-| name                             | description                                                                                |
-| -------------------------------- | ------------------------------------------------------------------------------------------ |
-| `stringToTruncte`                | The string to truncate                                                                     |
-| `maxLength`                      | The max length of the returned string                                                      |
-| `removeDanglingCharacters`       | Remove any of the provided dangling characters. No seperation between characters e.g. -,!% |
-| `truncationSymbol`               | Appends a string to the end of the truncated string to indicate truncation has occurred    |
+| name                       | description                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------ |
+| `stringToTruncte`          | The string to truncate                                                                     |
+| `maxLength`                | The max length of the returned string                                                      |
+| `removeDanglingCharacters` | Remove any of the provided dangling characters. No seperation between characters e.g. -,!% |
+| `truncationSymbol`         | Appends a string to the end of the truncated string to indicate truncation has occurred    |
 
 ## Outputs
 
@@ -29,7 +29,7 @@ on: [ push ]
       runs-on: ubuntu-latest
       steps:
         - name: Truncate String
-          uses: 2428392/gh-truncate-string-action@v1.2.0
+          uses: 2428392/gh-truncate-string-action@v1
           id: truncatedString
           with:
             stringToTruncate: 'abcdefghijklmnopqrstuvwxyz'
@@ -50,7 +50,7 @@ on: [ push ]
       runs-on: ubuntu-latest
       steps:
         - name: Truncate String
-          uses: 2428392/gh-truncate-string-action@v1.2.0
+          uses: 2428392/gh-truncate-string-action@v1
           id: truncatedString
           with:
             stringToTruncate: 'abcdefghi-jklmnopqrstuvwxyz'
@@ -72,7 +72,7 @@ on: [ push ]
       runs-on: ubuntu-latest
       steps:
         - name: Truncate String
-          uses: 2428392/gh-truncate-string-action@v1.2.0
+          uses: 2428392/gh-truncate-string-action@v1
           id: truncatedString
           with:
             stringToTruncate: 'abcdefg#-?hijklmnopqrstuvwxyz'
@@ -94,7 +94,7 @@ on: [ push ]
       runs-on: ubuntu-latest
       steps:
         - name: Truncate String
-          uses: 2428392/gh-truncate-string-action@v1.2.0
+          uses: 2428392/gh-truncate-string-action@v1
           id: truncatedString
           with:
             stringToTruncate: 'abcde'
